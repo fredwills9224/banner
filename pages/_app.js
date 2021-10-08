@@ -67,7 +67,7 @@ class MyApp extends App {
           <MyProvider 
             Component={Component} 
             {...pageProps}
-            shopOrigin=  {host} 
+            shopOrigin=  {shopOrigin} 
           />
         </Provider>
       </AppProvider>
