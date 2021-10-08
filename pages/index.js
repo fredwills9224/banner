@@ -2,14 +2,23 @@ import { ResourcePicker } from "@shopify/app-bridge-react";
 import { EmptyState, Page } from "@shopify/polaris";
 import React, { useEffect, useState } from "react";
 import ProductEmptyState from "../components/ProductEmptyState";
-import ProductList from "../components/ProductList";
 import ProductPage from "../components/ProductPage";
+import store from 'store-js';
 
-function index(){
+function index(shopOrigin){
    
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [productsId, setProductsId] = useState([]); 
+
+  useEffect(()=>{
+
+    const productList = store.get(`${shopOrigin}-products`);
+    if(productList){
+      setProducts(productList);
+    }
+
+  }, [])
 
   useEffect(()=>{
 
@@ -25,8 +34,11 @@ function index(){
   }, [products]);
 
   function handleProductSelection(payload){
+    
     setIsOpen(false);
     setProducts(payload.selection);
+    store.set(`${shopOrigin}-products`, payload.selection);
+
   };
 
   return(
