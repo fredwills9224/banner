@@ -15,6 +15,25 @@ const app = next({
 });
 const handle = app.getRequestHandler();
 
+function storeCallback(session){
+  console.log('storeCallback', session);
+  return true;
+};
+
+function loadCallback(id){
+  console.log('loadCallBack', id);
+};
+
+function deleteCallback(id){
+  console.log('deleteCallback', id)
+}
+
+ const sessionStorage = new Shopify.Session.CustomSessionStorage(
+  storeCallback,
+  loadCallback,
+  deleteCallback
+ );
+
 Shopify.Context.initialize({
   API_KEY: process.env.SHOPIFY_API_KEY,
   API_SECRET_KEY: process.env.SHOPIFY_API_SECRET,
@@ -23,7 +42,7 @@ Shopify.Context.initialize({
   API_VERSION: ApiVersion.October20,
   IS_EMBEDDED_APP: true,
   // This should be replaced with your preferred storage strategy
-  SESSION_STORAGE: new Shopify.Session.MemorySessionStorage(),
+  SESSION_STORAGE: sessionStorage,
 });
 
 // Storing the currently active shops in memory will force them to re-login when your server restarts. You should
