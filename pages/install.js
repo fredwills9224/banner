@@ -1,29 +1,23 @@
 import { Layout, Page, SettingToggle, TextStyle } from "@shopify/polaris";
 import React, { useState } from "react";
-import Axios from 'axios';
-import { useAppBridge } from '@shopify/app-bridge-react';
-import { getSessionToken } from "@shopify/app-bridge-utils";
+import { useAxios } from "../hooks/useAxios";
 
 function install(){
 
-    const app = useAppBridge();
+    const [axios] = useAxios();
     const [isInstalled, setIsInstalled] = useState(null);
     const titleDescription = isInstalled ? 'Uninstall' : 'Install';
     const bodyDescription = isInstalled ? 'installed' : 'uninstalled';
+    
     async function handleAction(){
 
         if(!isInstalled){
-
-            const token = await getSessionToken(app);
-            const config = {
-                headers:{Authorization: `Bearer ${token}`}
-            };
-            Axios.post('https://f425-45-59-35-96.ngrok.io/script_tag', {}, config);
-        
+            axios.post('https://69cc-45-59-35-96.ngrok.io/script_tag');
         }
         setIsInstalled(oldValue => !oldValue);
     
     };
+
     return(
 
         <Page>
