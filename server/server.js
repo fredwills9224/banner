@@ -126,7 +126,12 @@ app.prepare().then(async () => {
     
     const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
     ctx.sessionFromToken = session;
-    console.log('middleware', session);
+    if(session?.shop && session?.accessToken){
+      
+      const client = new Shopify.Clients.Rest(session.shop, session.accessToken);
+      ctx.myClient = client;
+
+    }
     return next();
   
   };

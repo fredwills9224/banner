@@ -12,7 +12,7 @@ function install(){
     async function handleAction(){
 
         if(!isInstalled){
-            axios.post('https://69cc-45-59-35-96.ngrok.io/script_tag');
+            axios.post('https://6792-45-59-35-96.ngrok.io/script_tag');
         }
         setIsInstalled(oldValue => !oldValue);
     

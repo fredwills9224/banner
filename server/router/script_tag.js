@@ -12,11 +12,9 @@ router.get('/all', async (ctx)=>{
 });
 router.post('/', async (ctx)=>{
 
-    // const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
-    // console.log('Session from token', session);
     console.log('create script tag', ctx.sessionFromToken);
-    const { shop, accessToken } = ctx.sessionFromToken;
-    await createScriptTag(shop, accessToken);
+    // const { shop, accessToken } = ctx.sessionFromToken;
+    await createScriptTag(ctx.myClient);
     ctx.body = 'Create a script tag';
 
 });
