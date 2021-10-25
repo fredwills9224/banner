@@ -12,9 +12,9 @@ export async function createScriptTag(shop, token){
             'event': 'onload',
             'src': 'https://google.com'
         }
-    }
+    };
     try{
-        const result = await axios.post(url, body, headers);
+        const result = await axios.post(url, body, {headers: headers});
         console.log(result.data);
     }catch(err){
         console.error('Error creating a new tag: ', err);
@@ -27,17 +27,17 @@ function getBaseUrl(shop){
 };
 
 function getAllScriptTagsUrl(shop){
-    return `${getBaseUrl(shop)}/admin/api/2021/script_tags.json`;
+    return `${getBaseUrl(shop)}/admin/api/2021-01/script_tags.json`;
 };
 
-function getAScriptTagUrl(shop, id){
-    return `${getBaseUrl(shop)}/admin/api/2021/script_tags/${id}.json`;
+function getScriptTagUrl(shop, id){
+    return `${getBaseUrl(shop)}/admin/api/2021-01/script_tags/${id}.json`;
 };
 
 function getCreateScriptTagUrl(shop){
-    return `${getBaseUrl(shop)}/admin/api/2021/script_tags.json`;
+    return `${getBaseUrl(shop)}/admin/api/2021-01/script_tags.json`;
 };
 
 function getDeleteScriptTagUrl(shop, id){
-    return `${getBaseUrl(shop)}/admin/api/2021/script_tags/${id}.json`;
+    return `${getBaseUrl(shop)}/admin/api/2021-01/script_tags/${id}.json`;
 };

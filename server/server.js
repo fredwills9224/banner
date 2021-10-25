@@ -40,11 +40,11 @@ function deleteCallback(id){
   console.log('deleteCallback', id)
 }
 
- const sessionStorage = new Shopify.Session.CustomSessionStorage(
-  storeCallback,
-  loadCallback,
-  deleteCallback
- );
+const sessionStorage = new Shopify.Session.CustomSessionStorage(
+ storeCallback,
+ loadCallback,
+ deleteCallback
+);
 
 Shopify.Context.initialize({
   API_KEY: process.env.SHOPIFY_API_KEY,
@@ -122,6 +122,16 @@ app.prepare().then(async () => {
     }
   );
   
+  async function injectSession(ctx, next){
+    
+    const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+    ctx.sessionFromToken = session;
+    console.log('middleware', session);
+    return next();
+  
+  };
+
+  server.use(injectSession);
   server.use(routes());
   
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
