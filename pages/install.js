@@ -1,5 +1,5 @@
 import { Layout, Page, SettingToggle, TextStyle } from "@shopify/polaris";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAxios } from "../hooks/useAxios";
 
 function install(){
@@ -9,10 +9,19 @@ function install(){
     const titleDescription = isInstalled ? 'Uninstall' : 'Install';
     const bodyDescription = isInstalled ? 'installed' : 'uninstalled';
     
+    async function fetchScriptTags(){
+        const {data} = await axios.get(`https://c8af-45-59-35-96.ngrok.io/script_tag`);
+        console.log('my initial script tag status: ', data);
+    };
+
+    useEffect(()=>{
+        fetchScriptTags();
+    }, []);
+
     async function handleAction(){
 
         if(!isInstalled){
-            axios.post('https://6792-45-59-35-96.ngrok.io/script_tag');
+            axios.post('https://c8af-45-59-35-96.ngrok.io/script_tag');
         }
         setIsInstalled(oldValue => !oldValue);
     
