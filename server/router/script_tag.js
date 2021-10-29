@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { createScriptTag } from '../controllers/script_tag_controller';
+import { createScriptTag, getAllScriptTags } from '../controllers/script_tag_controller';
 import Shopify from '@shopify/shopify-api';
 
 const router = new Router({ prefix: '/script_tag' });
@@ -8,7 +8,11 @@ router.get('/', async (ctx)=>{
     ctx.body = 'Get script tag';
 });
 router.get('/all', async (ctx)=>{
-    ctx.body = 'Get all script tag';
+    
+    console.log('Get all script tag');
+    const result = await getAllScriptTags(ctx.myClient);
+    ctx.body = result;
+
 });
 router.post('/', async (ctx)=>{
 

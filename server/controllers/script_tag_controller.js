@@ -25,6 +25,21 @@ export async function createScriptTag(client){
 
 };
 
+export async function getAllScriptTags(client){
+
+    if(!client){
+        console.error('Could not make the rest requet as the client does not exist');
+    }
+    const result = await client.get({
+        path: 'script_tags'
+    });
+    console.log('script_tags', result);
+    console.log('body', result.body);
+    console.log('script', result.body.script_tag);
+    return result;
+
+};
+
 function getBaseUrl(shop){
     return `https://${shop}`;
 };
