@@ -10,8 +10,11 @@ function install(){
     const bodyDescription = isInstalled ? 'installed' : 'uninstalled';
     
     async function fetchScriptTags(){
-        const {data} = await axios.get(`https://f17f-45-59-35-96.ngrok.io/script_tag/all`);
+        
+        const {data} = await axios.get(`https://25a8-45-59-35-96.ngrok.io/script_tag/all`);
         console.log('my initial script tag status: ', data);
+        setIsInstalled(data.installed);
+
     };
 
     useEffect(()=>{
@@ -21,7 +24,7 @@ function install(){
     async function handleAction(){
 
         if(!isInstalled){
-            axios.post('https://f17f-45-59-35-96.ngrok.io/script_tag');
+            axios.post('https://25a8-45-59-35-96.ngrok.io/script_tag');
         }
         setIsInstalled(oldValue => !oldValue);
     

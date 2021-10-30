@@ -10,8 +10,10 @@ router.get('/', async (ctx)=>{
 router.get('/all', async (ctx)=>{
     
     console.log('Get all script tag');
-    const result = await getAllScriptTags(ctx.myClient);
-    ctx.body = result;
+    const result = await getAllScriptTags(ctx.myClient, 'https://google.com/');
+    ctx.body = {
+        installed: result
+    };
 
 });
 router.post('/', async (ctx)=>{
