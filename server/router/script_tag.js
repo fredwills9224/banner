@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { createScriptTag, getAllScriptTags } from '../controllers/script_tag_controller';
+import { createScriptTag, deleteScriptTagById, getAllScriptTags } from '../controllers/script_tag_controller';
 import Shopify from '@shopify/shopify-api';
 
 const router = new Router({ prefix: '/script_tag' });
@@ -28,9 +28,8 @@ router.post('/', async (ctx)=>{
 router.delete('/', async (ctx)=>{
 
     const id = ctx.query.id;
-    console.log(`got the id for deletion ${id}`);
-    console.log('query string', ctx.query);
-    ctx.body = 'Delete script tag'
+    const result = await deleteScriptTagById(ctx.myClient, id);
+    ctx.body = result;
 
 });
 

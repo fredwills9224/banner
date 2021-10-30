@@ -39,6 +39,24 @@ export async function getAllScriptTags(client, src){
 
 };
 
+export async function deleteScriptTagById(client, id){
+
+    if(!client){
+        
+        console.error(
+            'Could not make the rest request as the client does not exist'
+        );
+        return;
+
+    }
+    const result = await client.delete({
+        path: `script_tags/${id}`
+    });
+    console.log(result);
+    return result;
+
+}
+
 function getBaseUrl(shop){
     return `https://${shop}`;
 };
