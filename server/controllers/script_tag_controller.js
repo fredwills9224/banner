@@ -35,7 +35,7 @@ export async function getAllScriptTags(client, src){
         path: 'script_tags'
     });
     const matchSrc = result.body.script_tags.filter(tag => tag.src === src);
-    return matchSrc.length > 0;
+    return matchSrc;
 
 };
 

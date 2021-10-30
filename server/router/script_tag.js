@@ -12,7 +12,8 @@ router.get('/all', async (ctx)=>{
     console.log('Get all script tag');
     const result = await getAllScriptTags(ctx.myClient, 'https://google.com/');
     ctx.body = {
-        installed: result
+        installed: result.length > 0,
+        details: result
     };
 
 });
@@ -25,7 +26,12 @@ router.post('/', async (ctx)=>{
 
 });
 router.delete('/', async (ctx)=>{
+
+    const id = ctx.query.id;
+    console.log(`got the id for deletion ${id}`);
+    console.log('query string', ctx.query);
     ctx.body = 'Delete script tag'
+
 });
 
 export default router;
