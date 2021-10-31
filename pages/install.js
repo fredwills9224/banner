@@ -12,7 +12,7 @@ function install(){
     
     async function fetchScriptTags(){
         
-        const {data} = await axios.get(`https://f519-45-59-35-96.ngrok.io/script_tag/all`);
+        const {data} = await axios.get(`https://aa42-45-59-35-96.ngrok.io/script_tag/all`);
         console.log('my initial script tag status: ', data);
         setIsInstalled(data.installed);
         if(data.details.length > 0){
@@ -28,9 +28,9 @@ function install(){
     async function handleAction(){
 
         if(!isInstalled){
-            axios.post('https://f519-45-59-35-96.ngrok.io/script_tag');
+            axios.post('https://aa42-45-59-35-96.ngrok.io/script_tag');
         }else{
-            axios.delete(`https://f519-45-59-35-96.ngrok.io/script_tag/?id=${scriptTagId}`);
+            axios.delete(`https://aa42-45-59-35-96.ngrok.io/script_tag/?id=${scriptTagId}`);
         }
         setIsInstalled(oldValue => !oldValue);
     
