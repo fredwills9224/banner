@@ -18,9 +18,16 @@ export async function updateTheme(shop, accessToken){
         return;
     }
     const newPage = await getAssetThemeLiquid(mainThemeId, axios);
-    const result = await uploadAssetTheme(axios, mainThemeId, newPage, 'layout/theme.liquid');
-    console.log(result);
+    if(newPage){
+        await uploadAssetTheme(axios, mainThemeId, newPage, 'layout/theme.liquid');
+    }
+    const newSnippet = getFile('../../liquid/banner-app.liquid');
+    await uploadAssetTheme(axios, mainThemeId, newSnippet, 'snippets/banner-app.liquid');
 
+}
+
+function getFile(fileName){
+    return fs.readFileSync(path.resolve(__dirname, fileName), 'utf-8');
 }
 
 async function uploadAssetTheme(axios, id, page, pageName){
@@ -31,9 +38,8 @@ async function uploadAssetTheme(axios, id, page, pageName){
             value: page
         }
     }
-    const result = await axios.put(`/themes/${id}/assets.json`, body);
-    console.log('Upload page', result);
-    return result;
+    await axios.put(`/themes/${id}/assets.json`, body);
+    console.log(`Upload page ${pageName}`);
 
 }
 
@@ -44,7 +50,7 @@ async function getAssetThemeLiquid(id, axios){
     if(!data.asset.value){
         return;
     }
-    const snippet = fs.readFileSync(path.resolve(__dirname, '../../liquid/theme.liquid'));
+    const snippet = getFile('../../liquid/theme.liquid');
     let newPage = data.asset.value;
     if(newPage.includes(snippet)){
         console.log('Page already has the snippet installed');
