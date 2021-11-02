@@ -17,7 +17,23 @@ export async function updateTheme(shop, accessToken){
     if(!mainThemeId){
         return;
     }
-    getAssetThemeLiquid(mainThemeId, axios);
+    const newPage = await getAssetThemeLiquid(mainThemeId, axios);
+    const result = await uploadAssetTheme(axios, mainThemeId, newPage, 'layout/theme.liquid');
+    console.log(result);
+
+}
+
+async function uploadAssetTheme(axios, id, page, pageName){
+
+    const body = {
+        asset: {
+            key: pageName,
+            value: page
+        }
+    }
+    const result = await axios.put(`/themes/${id}/assets.json`, body);
+    console.log('Upload page', result);
+    return result;
 
 }
 
@@ -35,10 +51,9 @@ async function getAssetThemeLiquid(id, axios){
         return;
     }
     newPage = data.asset.value.replace(
-        `{% section 'header' %}`,
+        `{% section 'header' %}\n`,
         `{% section 'header' %}\n${snippet}\n`
     );
-    console.log('New Page', newPage);
     return newPage;
 
 }
